@@ -10,6 +10,7 @@ import {Category} from '../../model/Category';
 export class CategoriesComponent implements OnInit {
 
   categories: Category[];
+  selectedCategory: Category;
 
   constructor(private dataHandler: DataHandlerService) { }
 
@@ -17,9 +18,12 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {
     this.categories = this.dataHandler.getCategories();
     console.log(this.categories);
+    this.dataHandler.categoriesSubject.subscribe(categories => this.categories = categories);
   }
 
-  showTasksByCategory(category: Category) {
-    this.dataHandler.fillTasksByCategory(category);
+  showTasksByCategory(category: Category): void {
+    this.selectedCategory = category;
+     this.dataHandler.fillTasksByCategory(category);
+    // this.dataHandler.fillTasks();
   }
 }
